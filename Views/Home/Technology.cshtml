@@ -1,0 +1,40 @@
+﻿<div class="container-fluid">
+    <div class="row" id="update">
+    </div>
+</div>
+
+@section Forsport{
+    <script>
+        Getdata();
+        function Getdata() {
+            let elm = document.getElementById('update')
+            $.ajax({
+                type: "GET",
+                url: "https://newsapi.org/v2/top-headlines?country=in&category=technology&apiKey=18f30ccbe8074223951c057194a1df68",
+                success: function (data) {
+                    console.log(data)
+                    let html = " "
+                    data.articles.forEach(function (element, index) {
+                        html += `<div class="card mx-2 my-2" style="width: 16rem;">
+  <img src=${element.urlToImage != null ? element.urlToImage : "https://www.sammobile.com/wp-content/uploads/2021/12/Galaxy-S10-Android-12-One-UI-4.0-3-720x405.jpg"} class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">${element.author != null ? element.author:"None"}</h5>
+      <h6 class="card-title">${element.title != null ? element.title : "None"}</h6>
+      <p class="card-text">${element.description != null ? element.description :"None"}</p>
+    <a href="${element.url}" class="btn btn-primary">Goto</a>
+  </div>
+</div>`
+                    });
+                    let elm = document.getElementById('update');
+                    if (data.length != 0) {
+                        elm.innerHTML = html;
+                    }
+                },
+                error: function () {
+                    alert("Error occured!!")
+                }
+            });
+        }
+    </script>
+}
+
